@@ -1,4 +1,8 @@
-
+img {
+    max-width: 100%;
+    height: auto;
+  }
+  
 body, html {
     margin: 0;
     padding: 0;
@@ -179,6 +183,8 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: relative;
     z-index: 1000;
+    width: 100%;
+ 
    
 }
 .nav-link{
@@ -280,6 +286,7 @@ body {
     height: 60px;
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    
 }
 .logo a{
     display: flex;
@@ -904,9 +911,11 @@ min-height: 100%;
 }
 
 .worker-cards {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .worker-cards .no-results {
@@ -930,6 +939,7 @@ min-height: 100%;
     flex-direction: row;
     align-items: center;
     gap: 35px; 
+    width: 100%;
 }
 
 .worker-photo img {
@@ -1172,29 +1182,31 @@ min-height: 100%;
 
 
 .dropdown {
-    position: relative; 
+    position: relative;
     display: inline-block;
 }
 
 .dropdown-content {
-    display: none; 
-    position: absolute; 
-    right: 0; 
-    background-color: #ffffff;
-    min-width: 220px; 
+    display: none;
+    position: absolute;
+    background-color: #1a3557;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
     border-radius: 8px;
-    z-index: 1001;
-    overflow: hidden; 
+    overflow: hidden;
+    top: 100%;
+    margin-top: 5px;
+    right: 0; 
 }
 
 .dropdown-content a {
-    color: #333; 
+   color: white;
     padding: 12px 16px;
     text-decoration: none;
-    display: block; 
-    text-align: left;
-    font-size: 16px;
-    font-family: system-ui, sans-serif;
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 18px;
   
 }
 
@@ -2611,3 +2623,12 @@ min-height: 100%;
 .rating-number{
     color:black ;
 }
+
+.loading-message {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px 0;
+  }
+  

@@ -1,321 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>find help now</title>
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Help Now</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-            <a href="index.html">
-                <img src="/assets/gigconnect.logo.png" alt="">
-                <span class="logo-text">GigConnect</span>
-            </a>
-            
-        </div>
-            <ul class="nav-link">
-                <li><a href="howitworks.html" class="work">How It Works</a></li>
-                <li><a href="findHelpNow.html" class="Help">Services</a></li>
-                <li><a href="contactus.html" class="contact">Contact us</a></li>
-            </ul>
-            <div class="nav-buttons">
-                <div class="dropdown">
-                    <button class="Login-btn">Login</button>
-                    <div class="dropdown-content">
-                        <a href="clientlogin.html">Login as Client</a>
-                        <a href="professionallogin.html">Login as Professional</a>
-                    </div>
-                </div>
-                <a href="signup.html" class="Signup-btn">Sign up</a>
-            </div>
-        </nav>  
-    </header>
 
-    <div class="all-content">
-        <div class="search-section">
-           <form> 
-               <div class="search-bar-group">
-                    <div class="input-with-icon">
-                        <i class="magnifying-glass"><img src="/assets/search-bar.png" alt=""></i>
-                        <input type="text" id="search-skill" placeholder="Search for service ( e.g. Electrician )" required>
-                    </div>
-                    <button type="button" class="find-help">Find Help</button>
-                </div>
-            
-                <div class="input-with-icon">
-                    <i class="location-dot"><img src="/assets/location-img.png" alt=""></i>
-                    <input type="text" id="search-city" placeholder="Enter your location ( e.g. Sector 56, Gurugram )" required>
-                </div>
-                
-                <button type="button" class="clear-btn">Clear Search</button> 
-            
-                <div class="filters-bar">
-                    <span>Showing 20 Electricians</span>
-                    <div class="filter-control">
-                        <span>Filters</span>
-                        <i class="fa-solid fa-sliders"></i>
-                    </div>
-                </div>
-            </form> 
-            
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html">
+        <img src="/assets/gigconnect.logo.png" alt="">
+        <span class="logo-text">GigConnect</span>
+      </a>
+    </div>
+
+    <ul class="nav-link">
+      <li><a href="howitworks.html">How It Works</a></li>
+      <li><a href="findHelpNow.html">Services</a></li>
+      <li><a href="contactus.html">Contact us</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      <div class="dropdown">
+        <button class="Login-btn">Login</button>
+        <div class="dropdown-content">
+          <a href="clientlogin.html">Login as Client</a>
+          <a href="professionallogin.html">Login as Professional</a>
         </div>
-        
-       <section class="workers">
-        <h2>Explore 20 Electricians</h2>
-        <div class="worker-cards">
-            </div>
-       </section>
-    </div> <footer class="main-footer">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="brand-logo-text"> 
-                        <img src="/assets/gigconnect.logo.png" alt="GigConnect Logo" class="footer-logo">
-                        <span class="brand-text">GigConnect</span>
-                    </div> 
-                    <p class="footer-description">Connecting Gurugram's skilled professionals with reliable work opportunities and efficient household and business services."</p>
-                </div>
-                <div class="footer-social">
-                    <h4>Connect with us</h4>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><img src="/assets/facebook.png" alt="Facebook"></a>
-                        <a href="#" aria-label="LinkedIn"><img src="/assets/linked in.png" alt="LinkedIn"></a>
-                        <a href="#" aria-label="Instagram"><img src="/assets/insta logo.png" alt="Instagram"></a>
-                    </div>
-                </div> 
-             </div> 
-            
-            <hr class="footer-separator">
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 GigConnect. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-            </div>
-    </footer>
-    <script src="/javascript/findhelpnow.js"></script>
+      </div>
+      <a href="signup.html" class="Signup-btn">Sign up</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= SEARCH SECTION ================= -->
+<div class="all-content">
+
+  <div class="search-section">
+    <form>
+
+      <div class="search-bar-group">
+        <div class="input-with-icon">
+          <img src="/assets/search-bar.png" alt="">
+          <input id="search-skill" type="text"
+                 placeholder="Search for service (e.g. Electrician)">
+        </div>
+        <button type="button" class="find-help">Find Help</button>
+      </div>
+
+      <div class="input-with-icon">
+        <img src="/assets/location-img.png" alt="">
+        <input id="search-city" type="text"
+               placeholder="Enter your location (e.g. Sector 56, Gurugram)">
+      </div>
+
+      <button type="button" class="clear-btn">Clear Search</button>
+
+      <div class="filters-bar">
+        <span>Showing Professionals</span>
+
+        <select id="sort-select">
+          <option value="">Sort by</option>
+          <option value="experience">Experience (High → Low)</option>
+          <option value="rating">Rating (High → Low)</option>
+          <option value="distance">Distance (Near → Far)</option>
+        </select>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- ================= RESULTS ================= -->
+  <section class="workers">
+    <h2>Explore Professionals</h2>
+
+    <p class="loading-message" style="display:none;">
+      Loading Professionals...
+    </p>
+
+    <div class="worker-cards"></div>
+  </section>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="main-footer">
+  <div class="container">
+    <p>© 2025 GigConnect. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/javascript/findhelpnow.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-<!-- <div class="worker-cards">
-    <div class="card">
-        <div class="worker-photo">
-            <img src="assets/suresh 2ndpage.png" alt="Suresh">
-        </div>
-        <div class="card-content">
-            <h3>Suresh</h3>
-            <div class="rating-visual">
-                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span>
-            </div>
-            <p class="experience">Govt. certified 6+ yrs. of experience</p>
-            <p class="distance">1.5km away</p>
-            <button class="contact-btn">Contact</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="worker-photo">
-            <img src="assets/Ravi kumar.png" alt="Ravi Kumar">
-        </div>
-        <div class="card-content">
-            <h3>Ravi Kumar</h3>
-            <div class="rating-visual">
-                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
-            </div>
-            <p class="experience">Govt. certified 6+ yrs. of experience</p>
-            <p class="distance">1.0km away</p>
-            <button class="contact-btn">Contact</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="worker-photo">
-            <img src="assets/rajesh 2ndpage.png" alt="Rajesh">
-        </div>
-        <div class="card-content">
-            <h3>Rajesh</h3>
-            <div class="rating-visual">
-                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span>
-            </div>
-            <p class="experience">Govt. certified 4+ yrs. of experience</p>
-            <p class="distance">2km away</p>
-            <button class="contact-btn">Contact</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="worker-photo">
-            <img src="assets/atif 2ndp PAGE.png" alt="Atif">
-        </div>
-        <div class="card-content">
-            <h3>Atif</h3>
-            <div class="rating-visual">
-                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span><span>★</span>
-            </div>
-            <p class="experience">Govt. certified 3+ yrs. of experience</p>
-            <p class="distance">2km away</p>
-            <button class="contact-btn">Contact</button>
-        </div>
-    </div>
-</div> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Help Now - GigConnect</title>
-    <link rel="stylesheet" href="style1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body id="find-help-page">
-
-    <div class="body-wrapper">
-
-        <header>
-            <nav class="navbar">
-                <div class="logo">
-                    <div class="logo-img"><img src="assets/gigconnect.logo.png" alt="GigConnect Logo"></div>
-                    <span class="logo-text">GigConnect</span>
-                </div>
-                <ul class="nav-link">
-                    <li><a href="#">How It Works</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">About us</a></li>
-                </ul>
-                <div class="nav-buttons">
-                    <button class="Login-btn">Login</button>
-                    <button class="Signup-btn">Sign up</button>
-                </div>
-            </nav>
-        </header>
--
-        <main class="all-content">
-
-            <div class="search-section">
-                <div class="search-bar-group">
-                    <div class="input-with-icon">
-                        <img src="assets/search-bar.png" alt="Search Icon">
-                        <input type="text" placeholder="Search for service (e.g., Electrician)">
-                    </div>
-                    <button class="find-help">Find Help</button>
-                </div>
-                <div class="input-with-icon">
-                    <img src="assets/location-img.png" alt="Location Icon">
-                    <input type="text" placeholder="Enter your location (e.g., Sector 56, Gurugram)">
-                </div>
-                <div class="filters-bar">
-                    <span>Showing 20 Electricians</span>
-                    <div class="filter-control">
-                        <span>Filters</span>
-                        </div>
-                </div>
-            </div>
-
-            <section class="workers">
-                <h2>Explore 20 Electricians</h2>
-                <div class="worker-cards">
-
-                    <div class="card">
-                        <div class="worker-photo">
-                            <img src="assets/suresh 2ndpage.png" alt="Suresh">
-                        </div>
-                        <div class="card-content">
-                            <h3>Suresh</h3>
-                            <div class="rating-visual">
-                                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span>
-                            </div>
-                            <p class="experience">Govt. certified 6+ yrs. of experience</p>
-                            <p class="distance">1.5km away</p>
-                            <button class="contact-btn">Contact</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="worker-photo">
-                            <img src="assets/Ravi kumar.png" alt="Ravi Kumar">
-                        </div>
-                        <div class="card-content">
-                            <h3>Ravi Kumar</h3>
-                            <div class="rating-visual">
-                                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
-                            </div>
-                            <p class="experience">Govt. certified 6+ yrs. of experience</p>
-                            <p class="distance">1.0km away</p>
-                            <button class="contact-btn">Contact</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="worker-photo">
-                            <img src="assets/rajesh 2ndpage.png" alt="Rajesh">
-                        </div>
-                        <div class="card-content">
-                            <h3>Rajesh</h3>
-                            <div class="rating-visual">
-                                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span>
-                            </div>
-                            <p class="experience">Govt. certified 4+ yrs. of experience</p>
-                            <p class="distance">2km away</p>
-                            <button class="contact-btn">Contact</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="worker-photo">
-                            <img src="assets/atif 2ndp PAGE.png" alt="Atif">
-                        </div>
-                        <div class="card-content">
-                            <h3>Atif</h3>
-                            <div class="rating-visual">
-                                <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span>★</span><span>★</span>
-                            </div>
-                            <p class="experience">Govt. certified 3+ yrs. of experience</p>
-                            <p class="distance">2km away</p>
-                            <button class="contact-btn">Contact</button>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-        </main>
-
-        <footer class="main-footer">
-            <div class="container">
-                <div class="footer-top">
-                    <div class="footer-brand">
-                        <div class="brand-logo-text"> 
-                            <img src="assets/gigconnect.logo.png" alt="GigConnect Logo" class="footer-logo">
-                            <span class="brand-text">GigConnect</span>
-                        </div> 
-                        <p class="footer-description">Connecting Gurugram's skilled professionals with reliable work opportunities and efficient household and business services."</p>
-                    </div>
-                    <div class="footer-social">
-                        <h4>Connect with us</h4>
-                        <div class="social-icons">
-                            <a href="#" aria-label="Facebook"><img src="assets/facebook.png" alt="Facebook"></a>
-                            <a href="#" aria-label="LinkedIn"><img src="assets/linked in.png" alt="LinkedIn"></a>
-                            <a href="#" aria-label="Instagram"><img src="assets/insta logo.png" alt="Instagram"></a>
-                        </div>
-                    </div> 
-                </div> 
-                
-                <hr class="footer-separator">
-                
-                <div class="footer-bottom">
-                    <p>&copy; 2025 GigConnect. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-</body>
-</html> -->
