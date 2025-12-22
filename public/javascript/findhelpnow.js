@@ -1,6 +1,8 @@
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+  const API_BASE = "https://gigconnect-backend-1.onrender.com";
+
   
 class Professional {
     constructor(data) {
@@ -101,7 +103,8 @@ class Professional {
       }
       if (city) params.push(`city=${encodeURIComponent(city)}`);
   
-      const url = `/api/workers?${params.join("&")}`;
+      const url = `${API_BASE}/api/workers?${params.join("&")}`;
+
       console.log("FETCH:", url);
   
       try {
