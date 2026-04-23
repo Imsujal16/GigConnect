@@ -10,7 +10,7 @@ const sanitizeHtml = require("sanitize-html");
 
 const siteContent = require("./data/siteContent");
 const seedData = require("./data/mysqlSeed");
-const { buildHomePageContent } = require("./lib/homeContent");
+
 const {
   initializeMySql,
   isDatabaseReady,
