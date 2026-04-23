@@ -36,7 +36,9 @@ const {
 
 const app = express();
 app.get('/', async (req, res) => {
-    res.render("index");
+    res.render("index", {
+        homeContent: siteContent.home
+    });
 });
 
 const PORT = process.env.PORT || 3000;
