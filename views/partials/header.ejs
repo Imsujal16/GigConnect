@@ -1,28 +1,67 @@
-<header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="/">
-          <img src="/assets/gigconnect.logo.png" alt="GigConnect Logo">
-          <span class="logo-text">GigConnect</span>
-        </a>
-      </div>
-  
-      <ul class="nav-link">
-        <li><a href="/howitworks" class="work">How It Works</a></li>
-        <li><a href="/findHelpNow" class="Help">Services</a></li>
-        <li><a href="/contactus" class="contact">Contact us</a></li>
-      </ul>
-  
-      <div class="nav-buttons">
-        <div class="dropdown">
-          <button class="Login-btn">Login</button>
-          <div class="dropdown-content">
-            <a href="/clientlogin">Login as Client</a>
-            <a href="/professionallogin">Login as Professional</a>
-          </div>
+<header class="site-header">
+  <div class="shell">
+    <nav class="navbar glass-shell" aria-label="Primary navigation">
+      <a href="/" class="brand-lockup" aria-label="GigConnect home">
+        <img src="/assets/gigconnect.logo.png" alt="GigConnect logo" class="brand-mark">
+        <span class="brand-copy">
+          <span class="brand-name"><%= brand.name %></span>
+          <span class="brand-caption"><%= brand.tagline %></span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-navigation-panel"
+        data-nav-toggle
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-panel" id="primary-navigation-panel" data-nav-panel>
+        <ul class="nav-links">
+          <% navigation.forEach(function (item) { %>
+            <li>
+              <a href="<%= item.href %>" class="<%= currentPath === item.href ? 'is-active' : '' %>">
+                <%= item.label %>
+              </a>
+            </li>
+          <% }) %>
+          <% if (sessionUser && sessionUser.role === "client") { %>
+            <li>
+              <a href="/client/dashboard" class="<%= currentPath === '/client/dashboard' ? 'is-active' : '' %>">
+                Dashboard
+              </a>
+            </li>
+          <% } %>
+          <% if (sessionUser && sessionUser.role === "professional") { %>
+            <li>
+              <a href="/professional/dashboard" class="<%= currentPath === '/professional/dashboard' ? 'is-active' : '' %>">
+                Dashboard
+              </a>
+            </li>
+          <% } %>
+        </ul>
+
+        <div class="nav-actions">
+          <% if (sessionUser) { %>
+            <span class="nav-user-badge"><%= sessionUser.name %></span>
+            <a href="/logout" class="button button-secondary">Log out</a>
+          <% } else { %>
+            <details class="nav-dropdown">
+              <summary class="button button-secondary">Log in</summary>
+              <div class="nav-dropdown-menu">
+                <a href="/clientlogin">Client login</a>
+                <a href="/professionallogin">Professional login</a>
+              </div>
+            </details>
+            <a href="/signup" class="button button-primary">Sign up</a>
+          <% } %>
         </div>
-        <a href="/signup" class="Signup-btn">Sign up</a>
       </div>
     </nav>
-  </header>
-  
+  </div>
+</header>

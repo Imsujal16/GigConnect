@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= (typeof title !== 'undefined') ? title : 'GigConnect' %></title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= typeof title !== "undefined" ? title : "GigConnect" %></title>
+  <meta
+    name="description"
+    content="<%= brand && brand.tagline ? brand.tagline : 'GigConnect connects users with trusted local professionals.' %>"
+  />
+  <meta name="theme-color" content="#f5f1e8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
   <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="<%= pageClass || '' %>">
+  <%- include("../partials/header") %>
 
-  <%- include('../partials/header') %>
-
-  <main>
+  <main class="site-main">
     <%- body %>
   </main>
 
-  <%- include('../partials/footer') %>
+  <%- include("../partials/footer") %>
 
-  <% if (typeof scripts !== 'undefined') { %>
-    <% scripts.forEach(function(src){ %>
-      <script src="<%= src %>"></script>
+  <script src="/javascript/site.js" defer></script>
+  <% if (typeof scripts !== "undefined") { %>
+    <% scripts.forEach(function (src) { %>
+      <script src="<%= src %>" defer></script>
     <% }) %>
   <% } %>
 </body>

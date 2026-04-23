@@ -1,0 +1,100 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow">Client dashboard</p>
+    <h1>Track your live booking requests.</h1>
+    <p>Every request you create is stored in MySQL and appears here with status, budget, and schedule details.</p>
+  </div>
+</section>
+
+<section class="section shell dashboard-shell">
+  <%- include("partials/notice") %>
+
+  <div class="dashboard-metrics">
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.totalBookings %></strong>
+      <h3>Total requests</h3>
+      <p>All booking requests created from your client account.</p>
+    </article>
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.confirmedBookings %></strong>
+      <h3>Confirmed</h3>
+      <p>Requests that a professional has accepted for service.</p>
+    </article>
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.pendingBookings %></strong>
+      <h3>Pending</h3>
+      <p>Requests waiting for confirmation or scheduling.</p>
+    </article>
+  </div>
+
+  <div class="dashboard-list">
+    <% if (!dashboardData.bookings.length) { %>
+      <div class="empty-state">
+        <h3>No bookings yet.</h3>
+        <p>Search professionals and create your first request to start using the live booking flow.</p>
+        <div class="empty-actions">
+          <a href="/findHelpNow" class="button button-primary">Find professionals</a>
+        </div>
+      </div>
+    <% } %>
+
+    <% dashboardData.bookings.forEach(function (booking) { %>
+      <article class="dashboard-card glass-panel" data-reveal>
+        <div class="dashboard-card-top">
+          <div class="dashboard-header-copy">
+            <p class="card-kicker">Booking <%= booking.bookingCode %></p>
+            <h2><%= booking.professionalName %></h2>
+          </div>
+          <span class="result-badge status-badge-<%= booking.status %>"><%= formatStatusLabel(booking.status) %></span>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Service</span>
+            <strong><%= booking.serviceName %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Date</span>
+            <strong><%= formatShortDate(booking.preferredDate) %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Time</span>
+            <strong><%= formatTimeSlot(booking.preferredTimeSlot) %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Budget</span>
+            <strong><%= formatCurrency(booking.budgetInr) %></strong>
+          </div>
+          <div class="dashboard-detail dashboard-detail-wide">
+            <span class="dashboard-label">Location</span>
+            <strong><%= booking.addressArea %></strong>
+          </div>
+          <div class="dashboard-detail dashboard-detail-wide">
+            <span class="dashboard-label">Professional area</span>
+            <strong><%= booking.professionalArea %>, <%= booking.professionalCity %></strong>
+          </div>
+        </div>
+
+        <% if (booking.details) { %>
+          <p class="result-description"><%= booking.details %></p>
+        <% } %>
+      </article>
+    <% }) %>
+  </div>
+
+  <section class="glass-panel dashboard-danger" data-reveal>
+    <div class="dashboard-danger-copy">
+      <p class="card-kicker">Danger zone</p>
+      <h2>Delete client profile</h2>
+      <p>Delete your account and end access to your dashboard. Existing booking records will no longer stay linked to your client account.</p>
+    </div>
+
+    <form method="POST" action="/client/delete-profile" class="danger-form">
+      <label class="danger-confirm">
+        <input type="checkbox" name="confirmDelete" value="yes" required>
+        <span>I understand that deleting this client profile is permanent.</span>
+      </label>
+      <button type="submit" class="button button-danger">Delete profile</button>
+    </form>
+  </section>
+</section>

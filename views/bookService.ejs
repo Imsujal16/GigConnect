@@ -1,0 +1,116 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow">Book service</p>
+    <h1><%= professional ? `Book ${professional.name}` : "Request a service" %></h1>
+    <p>Share your preferred time, area, and budget in rupees to create a live booking request.</p>
+  </div>
+</section>
+
+<section class="section shell booking-layout">
+  <div class="glass-panel booking-summary" data-reveal>
+    <p class="card-kicker">Professional summary</p>
+
+    <% if (professional) { %>
+      <div class="booking-pro">
+        <img src="<%= encodeURI(professional.photo) %>" alt="<%= professional.name %>" class="worker-preview-avatar">
+        <div>
+          <h2><%= professional.name %></h2>
+          <p><%= professional.city %><% if (professional.area) { %> | <%= professional.area %><% } %></p>
+        </div>
+      </div>
+
+      <div class="booking-badges">
+        <span class="result-badge is-rating"><%= Number(professional.ratings || 0).toFixed(1) %> / 5 rating</span>
+        <% if (professional.isVerified) { %>
+          <span class="result-badge is-verified">Verified professional</span>
+        <% } %>
+      </div>
+
+      <div class="booking-meta">
+        <span><%= professional.experience %> years experience</span>
+        <span><%= professional.distance %> km away</span>
+        <span>Starts at <%= formatCurrency(professional.startingPrice) %></span>
+      </div>
+
+      <div class="result-skills">
+        <% professional.skills.forEach(function (skill) { %>
+          <span class="skill-tag"><%= skill %></span>
+        <% }) %>
+      </div>
+
+      <p class="result-description"><%= professional.description %></p>
+    <% } else { %>
+      <p class="result-description">Choose a professional from the search results to start a booking.</p>
+    <% } %>
+  </div>
+
+  <div class="glass-panel booking-form-card" data-reveal>
+    <p class="card-kicker">Create request</p>
+    <h2>Send a booking request</h2>
+
+    <%- include("partials/notice") %>
+
+    <form class="auth-form" method="POST" action="<%= professional ? `/book-service/${professional.id}` : '#' %>">
+      <div class="form-row">
+        <label class="field-group">
+          <span>Full name</span>
+          <input type="text" name="fullName" value="<%= formData.fullName %>" required>
+        </label>
+
+        <label class="field-group">
+          <span>Email</span>
+          <input type="email" name="email" value="<%= formData.email %>" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Phone number</span>
+          <input type="tel" name="phone" value="<%= formData.phone %>" required>
+        </label>
+
+        <label class="field-group">
+          <span>Service</span>
+          <select name="serviceId" required>
+            <% serviceOptions.forEach(function (service) { %>
+              <option value="<%= service.id %>" <%= String(formData.serviceId) === String(service.id) ? "selected" : "" %>>
+                <%= service.name %> | <%= formatCurrency(service.priceInr) %>
+              </option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Preferred date</span>
+          <input type="date" name="preferredDate" value="<%= formData.preferredDate %>" required>
+        </label>
+
+        <label class="field-group">
+          <span>Time slot</span>
+          <input type="text" name="preferredTimeSlot" value="<%= formData.preferredTimeSlot %>" placeholder="10:00 AM - 12:00 PM" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Area / address</span>
+          <input type="text" name="addressArea" value="<%= formData.addressArea %>" placeholder="Sector 43, Gurugram" required>
+        </label>
+
+        <label class="field-group">
+          <span>Budget in rupees</span>
+          <input type="number" name="budget" value="<%= formData.budget %>" min="100" max="100000" required>
+        </label>
+      </div>
+
+      <label class="field-group">
+        <span>Job details</span>
+        <textarea name="details" rows="5" placeholder="What needs to be done?"><%= formData.details %></textarea>
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Create booking request</button>
+    </form>
+  </div>
+</section>

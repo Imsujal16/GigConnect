@@ -1,109 +1,247 @@
-<!-- <%- include('partials/header') %> -->
+<section class="hero-section">
+  <div class="shell hero-grid">
+    <div class="hero-copy" data-reveal>
+      <p class="eyebrow"><%= homeContent.hero.eyebrow %></p>
+      <h1><%= homeContent.hero.title %></h1>
+      <p class="hero-description"><%= homeContent.hero.description %></p>
 
-<div class="whole-content">
+      <div class="hero-actions">
+        <a href="/findHelpNow" class="button button-primary">Find professionals</a>
+        <a href="/register" class="button button-secondary">Register as a professional</a>
+      </div>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Verified Help<br>Minutes Away</h1>
-        <p class="hero-subtitle">
-            Instantly connect with skilled plumbers, electricians,<br> 
-            drivers, and more in Gurugram. All background-checked <br> 
-            and ready to work.
-        </p>
-
-        <div class="hero-search">
-            <input type="text" class="search-input" placeholder="What service do you need (eg: Carpenter)">
-            <a href="/findHelpNow" class="search-btn">Find Help now</a>
-        </div>
-
-        <div class="hero-register">
-            <span class="register-text">Are you a service professional?</span>
-            <a href="/register" class="register-pro">Register as pro</a>
-        </div>
+      <div class="pill-row">
+        <% homeContent.hero.trustPills.forEach(function (pill) { %>
+          <span class="info-pill"><%= pill %></span>
+        <% }) %>
+      </div>
     </div>
+
+    <form class="hero-search-card glass-panel" action="/findHelpNow" method="GET" data-reveal>
+      <p class="card-kicker">Quick search</p>
+      <h2>Start with what you need.</h2>
+
+      <label class="field-group">
+        <span>Service or professional</span>
+        <input
+          type="text"
+          name="skill"
+          placeholder="<%= homeContent.hero.searchPlaceholder %>"
+          autocomplete="off"
+        >
+      </label>
+
+      <label class="field-group">
+        <span>Location</span>
+        <input
+          type="text"
+          name="city"
+          value="<%= brand.city %>"
+          placeholder="<%= homeContent.hero.locationPlaceholder %>"
+          autocomplete="off"
+        >
+      </label>
+
+      <div class="chip-picker">
+        <% homeContent.hero.quickSearches.forEach(function (item) { %>
+          <button type="button" class="chip-button" data-fill-target="skill" data-fill-value="<%= item %>">
+            <%= item %>
+          </button>
+        <% }) %>
+      </div>
+
+      <button type="submit" class="button button-primary button-block">Search now</button>
+
+      <div class="hero-stats">
+        <% homeContent.hero.stats.forEach(function (stat) { %>
+          <div class="stat-card">
+            <strong><%= stat.value %></strong>
+            <span><%= stat.label %></span>
+          </div>
+        <% }) %>
+      </div>
+    </form>
+  </div>
 </section>
 
-<section class="services-section">
-    <div class="container">
+<section class="section shell">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">Popular services</p>
+    <h2>Browse the categories people search most.</h2>
+  </div>
 
-        <div class="how-it-works">
-            <h2>Get Things Done in 3 simple steps</h2>
-
-            <div class="steps-container">
-
-                <div class="step-card">
-                    <img src="/assets/search for skill.png" alt="Search for Skill Icon">
-                    <div class="step-text">
-                        <h3>Search for a Skill</h3>
-                    </div>
-                </div>
-
-                <div class="step-card">
-                    <img src="/assets/connect.png" alt="Connect Instantly Icon">
-                    <div class="step-text">
-                        <h3>Connect Instantly</h3>
-                    </div>
-                </div>
-
-                <div class="step-card">
-                    <img src="/assets/job done pay.png" alt="Job Done Pay Securely Icon">
-                    <div class="step-text">
-                        <h3>Job Done Pay Securely</h3>
-                    </div>
-                </div>
-
-            </div>
+  <div class="service-grid">
+    <% homeContent.services.forEach(function (service) { %>
+      <a class="service-card glass-panel" data-reveal href="/findHelpNow?skill=<%= encodeURIComponent(service.name) %>&city=<%= encodeURIComponent(brand.city) %>">
+        <div class="service-icon-wrap">
+          <img src="<%= service.icon %>" alt="<%= service.name %>">
         </div>
-
-        <div class="popular-services">
-            <h2>Explore Popular Services in Gurugram</h2>
-            <div class="services-grid"></div>
-        </div>
-
-        <div class="why-trust-us">
-            <h2>Why Gurugram Trusts Us</h2>
-        </div>
-
-        <div class="person-container">
-
-            <div class="person-card">
-                <div class="person-image">
-                    <img src="/assets/Priya S.png" alt="">
-                </div>
-                <div class="person-content">
-                    <h3>Priya S</h3>
-                    <p class="statement">
-                        "My AC stopped working during the summer <br> 
-                        peak! I found a verified technician in 10 <br> 
-                        minutes from Sector 56. A total lifesaver!"
-                    </p>
-                    <p class="meta">DLF Phase 4</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="person-image">
-                    <img src="/assets/Ravi kumar.png" alt="">
-                </div>
-                <div class="person-content">
-                    <h3>Ravi Kumar</h3>
-                    <p class="statement">
-                        "I used to wait for calls all day. Now, I get <br> 
-                        3-4 jobs daily, all within my area. My <br> 
-                        earnings have doubled and I get paid on <br> 
-                        time."
-                    </p>
-                    <p class="meta">Electrician</p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+        <h3><%= service.name %></h3>
+        <p><%= service.description %></p>
+        <% if (service.priceLabel || service.meta) { %>
+          <div class="service-meta">
+            <% if (service.priceLabel) { %>
+              <span><%= service.priceLabel %></span>
+            <% } %>
+            <% if (service.meta) { %>
+              <span><%= service.meta %></span>
+            <% } %>
+          </div>
+        <% } %>
+      </a>
+    <% }) %>
+  </div>
 </section>
 
-</div>
+<section class="section shell">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">Why GigConnect</p>
+    <h2>Everything you need to choose with confidence.</h2>
+  </div>
 
-<script src="/javascript/explorepopularservices.js"></script>
+  <div class="feature-grid">
+    <% homeContent.capabilities.forEach(function (item) { %>
+      <article class="feature-card glass-panel" data-reveal>
+        <h3><%= item.title %></h3>
+        <p><%= item.description %></p>
+      </article>
+    <% }) %>
+  </div>
+</section>
 
-<!-- <%- include('partials/footer') %> -->
+<section class="section shell">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">How it works</p>
+    <h2>Three clear steps from search to contact.</h2>
+  </div>
+
+  <div class="step-grid">
+    <% homeContent.steps.forEach(function (step) { %>
+      <article class="step-card glass-panel" data-reveal>
+        <span class="step-number"><%= step.step %></span>
+        <h3><%= step.title %></h3>
+        <p><%= step.description %></p>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section shell">
+  <div class="split-panel">
+    <% homeContent.personas.forEach(function (persona, index) { %>
+      <article class="persona-card glass-panel" data-reveal>
+        <span class="mini-badge"><%= persona.badge %></span>
+        <h3><%= persona.title %></h3>
+        <p><%= persona.description %></p>
+        <ul class="check-list">
+          <% persona.bullets.forEach(function (bullet) { %>
+            <li><%= bullet %></li>
+          <% }) %>
+        </ul>
+
+        <div class="persona-actions">
+          <% if (index === 0) { %>
+            <a href="/findHelpNow" class="button button-primary">Find professionals</a>
+          <% } else { %>
+            <a href="/register" class="button button-primary">Join GigConnect</a>
+          <% } %>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section shell">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">Featured professionals</p>
+    <h2>Professionals you can review quickly and trust faster.</h2>
+  </div>
+
+  <div class="featured-worker-grid">
+    <% featuredWorkers.forEach(function (worker) { const skills = Array.isArray(worker.skills) ? worker.skills : []; const rawPhone = String(worker.phone || worker.contact || ""); const phoneDigits = rawPhone.replace(/[^\d]/g, ""); const phoneDisplay = phoneDigits.length === 10 ? `+91 ${phoneDigits.slice(0, 5)} ${phoneDigits.slice(5)}` : rawPhone; const emailDisplay = String(worker.email || ""); const hasDirectContact = Boolean(phoneDisplay || emailDisplay); const contactPanelId = `featured-contact-${worker.id || worker._id}`; %>
+      <article class="worker-preview glass-panel" data-reveal>
+        <div class="worker-preview-head">
+          <img src="<%= encodeURI(worker.photo) %>" alt="<%= worker.name %>" class="worker-preview-avatar">
+          <div>
+            <h3><%= worker.name %></h3>
+            <p><%= worker.city %></p>
+          </div>
+        </div>
+
+        <div class="worker-preview-badges">
+          <span class="result-badge is-rating"><%= Number(worker.ratings || 0).toFixed(1) %> / 5</span>
+          <% if (worker.isVerified) { %>
+            <span class="result-badge is-verified">Verified</span>
+          <% } else { %>
+            <span class="result-badge">New profile</span>
+          <% } %>
+        </div>
+
+        <p class="worker-preview-meta"><%= worker.experience %> years experience | <%= worker.distance %> km away</p>
+        <% if (worker.startingPrice) { %>
+          <p class="worker-preview-rate">Starts at <%= formatCurrency(worker.startingPrice) %></p>
+        <% } %>
+
+        <div class="worker-preview-skills">
+          <% skills.slice(0, 3).forEach(function (skill) { %>
+            <span class="skill-tag"><%= skill %></span>
+          <% }) %>
+        </div>
+
+        <div class="worker-preview-actions">
+          <a href="/book-service/<%= worker.id || worker._id %>" class="button button-primary">Book now</a>
+          <a href="/findHelpNow?skill=<%= encodeURIComponent(skills[0] || worker.name) %>&city=<%= encodeURIComponent(worker.city) %>" class="button button-secondary">View similar</a>
+          <% if (hasDirectContact) { %>
+            <button
+              type="button"
+              class="button button-secondary"
+              data-contact-toggle
+              data-contact-default="Contact now"
+              aria-expanded="false"
+              aria-controls="<%= contactPanelId %>"
+            >
+              Contact now
+            </button>
+          <% } else { %>
+            <a href="/contactus" class="button button-secondary">Request support</a>
+          <% } %>
+        </div>
+
+        <% if (hasDirectContact) { %>
+          <div class="contact-reveal glass-inset" id="<%= contactPanelId %>" hidden>
+            <span class="contact-reveal-label">Direct contact</span>
+            <% if (phoneDisplay) { %>
+              <strong class="contact-reveal-value"><%= phoneDisplay %></strong>
+            <% } %>
+            <% if (emailDisplay) { %>
+              <span class="contact-reveal-meta"><%= emailDisplay %></span>
+            <% } %>
+            <p class="contact-reveal-copy">Use these details directly without leaving GigConnect.</p>
+          </div>
+        <% } %>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section shell">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">Reviews</p>
+    <h2>What people say after using GigConnect.</h2>
+  </div>
+
+  <div class="testimonial-grid">
+    <% homeContent.testimonials.forEach(function (item) { %>
+      <article class="testimonial-card glass-panel" data-reveal>
+        <div class="testimonial-person">
+          <img src="<%= item.image %>" alt="<%= item.name %>">
+          <div>
+            <h3><%= item.name %></h3>
+            <p><%= item.role %></p>
+          </div>
+        </div>
+        <blockquote><%= item.quote %></blockquote>
+      </article>
+    <% }) %>
+  </div>
+</section>

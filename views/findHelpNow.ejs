@@ -1,39 +1,81 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow"><%= discoverContent.eyebrow %></p>
+    <h1><%= discoverContent.title %></h1>
+    <p><%= discoverContent.description %></p>
+  </div>
+</section>
 
-
-<div class="all-content">
-    <div class="search-section">
-       <form> 
-           <div class="search-bar-group">
-                <div class="input-with-icon">
-                    <i class="magnifying-glass"><img src="/assets/search-bar.png" alt=""></i>
-                    <input type="text" id="search-skill" placeholder="Search for service ( e.g. Electrician )" required>
-                </div>
-                <button type="button" class="find-help">Find Help</button>
-            </div>
-        
-            <div class="input-with-icon">
-                <i class="location-dot"><img src="/assets/location-img.png" alt=""></i>
-                <input type="text" id="search-city" placeholder="Enter your location ( e.g. Sector 56, Gurugram )" required>
-            </div>
-            
-            <button type="button" class="clear-btn">Clear Search</button> 
-        
-            <div class="filters-bar">
-                <span>Showing Professionals</span>
-                <div class="filter-control">
-                    <span>Filters</span>
-                    <i class="fa-solid fa-sliders"></i>
-                </div>
-            </div>
-        </form> 
+<section
+  class="shell discover-shell"
+  id="discoverApp"
+  data-initial-query="<%= searchDefaults.queryText %>"
+  data-initial-city="<%= searchDefaults.city %>"
+  data-initial-sort="<%= searchDefaults.sort %>"
+  data-initial-verified="<%= searchDefaults.verifiedOnly %>"
+>
+  <div class="discover-search-panel glass-panel" data-reveal>
+    <div class="discover-sidebar-copy">
+      <p class="card-kicker">Search and filter</p>
+      <h2>Start with service and location, then refine if needed.</h2>
     </div>
-    
-   <section class="workers">
-    <h2>Explore 20 Electricians</h2>
-    <p class="loading-message" style="display:none;">Loading Professionals....</p>
-    <div class="worker-cards"></div>
-   </section>
-</div>
 
-<script src="/javascript/findhelpnow.js"></script>
+    <form class="discover-form" id="discoverForm">
+      <div class="discover-form-grid">
+        <label class="field-group">
+          <span>Service or professional</span>
+          <input type="text" id="search-query" name="skill" placeholder="Electrician, plumber, driver..." autocomplete="off">
+        </label>
 
+        <label class="field-group">
+          <span>Location</span>
+          <input type="text" id="search-city" name="city" placeholder="Sector, locality, or city" autocomplete="off">
+        </label>
+
+        <label class="field-group">
+          <span>Sort by</span>
+          <select id="sort-select" name="sort">
+            <option value="relevance">Best match</option>
+            <option value="rating">Highest rating</option>
+            <option value="experience">Most experienced</option>
+            <option value="distance">Nearest first</option>
+            <option value="newest">Newest profiles</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="discover-form-row">
+        <label class="toggle-row" for="verified-only">
+          <span>Show verified professionals only</span>
+          <input type="checkbox" id="verified-only" name="verified">
+        </label>
+
+        <div class="discover-form-actions">
+          <button type="submit" class="button button-primary">Search</button>
+          <button type="button" class="button button-secondary" id="clear-search">Clear</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="discover-chip-group">
+      <% discoverContent.quickFilters.forEach(function (filter) { %>
+        <button type="button" class="chip-button" data-fill-target="search-query" data-fill-value="<%= filter %>">
+          <%= filter %>
+        </button>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="discover-results">
+    <div class="results-topbar glass-panel" data-reveal>
+      <div>
+        <p class="card-kicker">Results</p>
+        <h2 id="resultsHeading">Featured professionals around <%= brand.city %></h2>
+        <p id="resultsSummary">Loading professionals...</p>
+      </div>
+    </div>
+
+    <p class="loading-state" id="loadingState" hidden>Loading professionals...</p>
+    <div class="results-grid" id="resultsGrid" aria-live="polite"></div>
+  </div>
+</section>

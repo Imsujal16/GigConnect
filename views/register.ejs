@@ -1,52 +1,111 @@
+<section class="section shell auth-layout">
+  <div class="glass-panel auth-story" data-reveal>
+    <p class="eyebrow">For professionals</p>
+    <h1><%= authContent.title %></h1>
+    <p><%= authContent.description %></p>
 
+    <ul class="check-list">
+      <% authContent.benefits.forEach(function (benefit) { %>
+        <li><%= benefit %></li>
+      <% }) %>
+    </ul>
+  </div>
 
-<div class="main-content">
-    <div class="registration-card">
-        <h2>Join Our Network Of Verified <br> Professionals</h2>
-        <p class="subtitle">Start earning by connecting to local clients in Gurugram</p>
+  <div class="glass-panel auth-form-card" data-reveal>
+    <p class="card-kicker">Join GigConnect</p>
+    <h2>Create your professional profile.</h2>
 
-        <form class="registration-form">
-            <div class="form-details">
-                <input type="text" id="name" name="Full name" placeholder="Full name" required>
-            </div>
-
-            <div class="form-details">
-                <input type="email" id="email" name="email" placeholder="Email Address" required>
-            </div>
-
-            <div class="form-details">
-                <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
-            </div>
-
-            <div class="form-details">
-                <input type="text" name="your primary skill" id="primary skill" placeholder="Your Primary Skill" required>
-            </div>
-
-            <div class="form-details">
-                <input type="text" id="city" name="city" placeholder="City (e.g. Gurugram)" required>
-            </div>
-
-            <div class="form-details">
-                <input type="number" id="experience" name="experience" placeholder="Experience (years)" min="0" max="100" required>
-            </div>
-
-            <div class="terms-checkbox">
-                <input type="checkbox" id="agree-terms" name="agree-terms" required>
-                <label for="agree-terms">
-                    <span class="checkbox-icon">✓</span>
-                    I agree to the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>
-                </label>
-            </div>
-
-            <button type="submit" class="continue-btn">Continue</button>
-
-            <div class="login-prompt">
-                <p>Already have an account? <a href="/professionallogin">Log In</a></p>
-            </div>
-        </form>
+    <%- include("partials/notice") %>
+    <div class="auth-note glass-inset">
+      <p><%= bridgeNote %></p>
     </div>
-</div>
 
-<script src="/javascript/registersubmit.js"></script>
+    <form class="auth-form registration-form" action="/register" method="POST">
+      <div class="form-row">
+        <label class="field-group">
+          <span>Full name</span>
+          <input type="text" id="name" name="fullname" value="<%= registerFormData.name %>" placeholder="Your full name" required>
+        </label>
 
+        <label class="field-group">
+          <span>Email address</span>
+          <input type="email" id="email" name="email" value="<%= registerFormData.email %>" placeholder="name@example.com" required>
+        </label>
+      </div>
 
+      <div class="form-row">
+        <label class="field-group">
+          <span>Phone number</span>
+          <input type="tel" id="phone" name="phone" value="<%= registerFormData.phone %>" placeholder="+91 12345 67890" required>
+        </label>
+
+        <label class="field-group">
+          <span>Primary skill</span>
+          <input type="text" id="primary-skill" name="primary-skill" value="<%= registerFormData.primarySkill %>" placeholder="Electrician" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Additional skills</span>
+          <input type="text" id="secondary-skills" name="secondary-skills" value="<%= registerFormData.secondarySkills %>" placeholder="CCTV, inverter repair, maintenance">
+        </label>
+
+        <label class="field-group">
+          <span>City</span>
+          <input type="text" id="city" name="city" value="<%= registerFormData.city %>" placeholder="Gurugram" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Service area</span>
+          <input type="text" id="area" name="area" value="<%= registerFormData.area %>" placeholder="Sector 56, DLF Phase 4" required>
+        </label>
+
+        <label class="field-group">
+          <span>Experience in years</span>
+          <input type="number" id="experience" name="experience" value="<%= registerFormData.experience %>" min="0" max="100" placeholder="6" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Starting rate in rupees</span>
+          <input type="number" id="hourly-rate" name="hourly-rate" value="<%= registerFormData.hourlyRate %>" min="100" max="100000" placeholder="599" required>
+        </label>
+
+        <label class="field-group">
+          <span>Profile photo URL</span>
+          <input type="url" id="photo" name="photo" value="<%= registerFormData.photo %>" placeholder="https://example.com/profile.jpg">
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Create password</span>
+          <input type="password" id="password" name="password" required>
+        </label>
+
+        <label class="field-group">
+          <span>Confirm password</span>
+          <input type="password" id="confirm-password" name="confirm-password" required>
+        </label>
+      </div>
+
+      <label class="field-group">
+        <span>Professional summary</span>
+        <textarea id="description" name="description" rows="5" placeholder="Describe your work, service quality, and what clients can expect."><%= registerFormData.description %></textarea>
+      </label>
+
+      <label class="toggle-row">
+        <span>I agree to the Terms of Service and Privacy Policy.</span>
+        <input type="checkbox" id="agree-terms" name="agree-terms" required>
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Create professional profile</button>
+    </form>
+
+    <p class="auth-switch">Already on the platform? <a href="/professionallogin">Log in</a></p>
+  </div>
+</section>

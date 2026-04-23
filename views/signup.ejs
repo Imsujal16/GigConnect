@@ -1,47 +1,68 @@
+<section class="section shell auth-layout">
+  <div class="glass-panel auth-story" data-reveal>
+    <p class="eyebrow">For clients</p>
+    <h1><%= authContent.title %></h1>
+    <p><%= authContent.description %></p>
 
+    <ul class="check-list">
+      <% authContent.benefits.forEach(function (benefit) { %>
+        <li><%= benefit %></li>
+      <% }) %>
+    </ul>
+  </div>
 
-<main class="signup-container">
-    <div class="signup-card">
-        <h2>Create Your Client Account</h2>
-        <p class="subtitle">Join to find trusted workers near you.</p>
+  <div class="glass-panel auth-form-card" data-reveal>
+    <p class="card-kicker">Create account</p>
+    <h2>Set up your client account.</h2>
 
-        <form class="signup-form" method="POST">
-            <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" placeholder="enter your fullname" required>
-            </div>      
-
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="name@gmail.com" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Create Password</label>
-                <input type="password" id="password" name="password" placeholder="create your password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="confirm your password" required>
-            </div>
-            
-            <div class="terms-checkbox-group">
-                <input type="checkbox" id="agree-terms" name="agree-terms" required>
-                <label for="agree-terms">
-                    I agree to the 
-                    <a href="#" class="terms-link">Terms of Service</a> & 
-                    <a href="#" class="terms-link">Privacy Policy</a>
-                </label>
-            </div>
-            
-            <button type="submit" class="signup-submit-btn">Sign Up</button>
-        </form>
-
-        <div class="login-prompt">
-            <p>Already have an account? <a href="/clientlogin">Log In</a></p>
-        </div>
+    <%- include("partials/notice") %>
+    <div class="auth-note glass-inset">
+      <p><%= bridgeNote %></p>
     </div>
-</main>
 
+    <form class="auth-form" action="/signup" method="POST">
+      <div class="form-row">
+        <label class="field-group">
+          <span>Full name</span>
+          <input type="text" id="fullname" name="fullname" value="<%= formData.fullname %>" required>
+        </label>
 
+        <label class="field-group">
+          <span>Email address</span>
+          <input type="email" id="email" name="email" value="<%= formData.email %>" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Phone number</span>
+          <input type="tel" id="phone" name="phone" value="<%= formData.phone %>" required>
+        </label>
+
+        <label class="field-group">
+          <span>City</span>
+          <input type="text" id="city" name="city" value="<%= formData.city %>" required>
+        </label>
+      </div>
+
+      <label class="field-group">
+        <span>Create password</span>
+        <input type="password" id="password" name="password" required>
+      </label>
+
+      <label class="field-group">
+        <span>Confirm password</span>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </label>
+
+      <label class="toggle-row">
+        <span>I agree to the Terms of Service and Privacy Policy.</span>
+        <input type="checkbox" id="agree-terms" name="agree-terms" required>
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Create account</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="/clientlogin">Log in</a></p>
+  </div>
+</section>

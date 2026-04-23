@@ -1,33 +1,38 @@
+<section class="section shell auth-layout">
+  <div class="glass-panel auth-story" data-reveal>
+    <p class="eyebrow">Client login</p>
+    <h1><%= authContent.title %></h1>
+    <p><%= authContent.description %></p>
+  </div>
 
+  <div class="glass-panel auth-form-card" data-reveal>
+    <p class="card-kicker">Log in</p>
+    <h2>Access your account.</h2>
 
-<main class="login-container">
-    <div class="login-card">
-        <h2>Welcome Back Client</h2>
-
-        <form class="login-form" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <div class="form-options">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-                <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-            
-            <button type="submit" class="login-button">Log In</button>
-        </form>
-        
-        <div class="signup-link">
-            <p>Don't have an account? <a href="/signup">Sign up</a></p>
-        </div>
+    <%- include("partials/notice") %>
+    <div class="auth-note glass-inset">
+      <p><%= bridgeNote %></p>
     </div>
-</main>
+
+    <form class="auth-form" action="/clientlogin" method="POST">
+      <label class="field-group">
+        <span>Email address</span>
+        <input type="email" id="email" name="email" value="<%= formData.email %>" required>
+      </label>
+
+      <label class="field-group">
+        <span>Password</span>
+        <input type="password" id="password" name="password" required>
+      </label>
+
+      <label class="toggle-row">
+        <span>Remember me on this device</span>
+        <input type="checkbox" id="remember" name="remember">
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Log in</button>
+    </form>
+
+    <p class="auth-switch">Need an account? <a href="/signup">Create one</a></p>
+  </div>
+</section>

@@ -1,13 +1,57 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow"><%= howItWorksContent.eyebrow %></p>
+    <h1><%= howItWorksContent.title %></h1>
+    <p><%= howItWorksContent.description %></p>
+  </div>
+</section>
 
+<section class="section shell">
+  <div class="feature-grid">
+    <% howItWorksContent.outcomes.forEach(function (outcome) { %>
+      <article class="feature-card glass-panel" data-reveal>
+        <h3><%= outcome.title %></h3>
+        <p><%= outcome.description %></p>
+      </article>
+    <% }) %>
+  </div>
+</section>
 
-<main id="howItWorksPageMain" class="how-it-works-main">
-    <h1 class="page-title">How GigConnect Works</h1>
+<section class="section shell">
+  <div class="timeline-board glass-panel" data-reveal>
+    <% homeSteps.forEach(function (step, index) { %>
+      <article class="timeline-item">
+        <div class="timeline-index"><span><%= index + 1 %></span></div>
+        <div class="timeline-content">
+          <p class="mini-badge">Step <%= step.step %></p>
+          <h2><%= step.title %></h2>
+          <p><%= step.description %></p>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
 
-    <section id="stepsContainer" class="steps-container">
-        <!-- Content will be populated by howitworks.js -->
-    </section>
-</main>
+<section class="section shell">
+  <div class="split-panel">
+    <article class="persona-card glass-panel" data-reveal>
+      <span class="mini-badge">For clients</span>
+      <h3>Search, compare, and contact with less hesitation.</h3>
+      <ul class="check-list">
+        <li>Start with service or area</li>
+        <li>Review trust and experience clearly</li>
+        <li>Reach the right person directly</li>
+      </ul>
+    </article>
 
-<script src="/javascript/howitworks.js"></script>
-
-
+    <article class="persona-card glass-panel" data-reveal>
+      <span class="mini-badge">For professionals</span>
+      <h3>Create a stronger first impression with local clients.</h3>
+      <ul class="check-list">
+        <li>Clearer profile presentation</li>
+        <li>Better trust signals</li>
+        <li>Cleaner onboarding experience</li>
+      </ul>
+    </article>
+  </div>
+</section>
