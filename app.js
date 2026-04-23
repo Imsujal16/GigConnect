@@ -35,8 +35,8 @@ const {
 } = require("./lib/mysqlStore");
 
 const app = express();
-app.get('/', (req, res) => {
-    res.send("GigConnect is Live on Railway!");
+app.get('/', async (req, res) => {
+    res.render("index");
 });
 
 const PORT = process.env.PORT || 3000;
