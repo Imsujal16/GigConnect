@@ -1,4 +1,12 @@
 <section class="section shell auth-layout">
+  <% const selectedSecondarySkills = Array.isArray(registerFormData.secondarySkills)
+    ? registerFormData.secondarySkills
+    : String(registerFormData.secondarySkills || "")
+        .split(",")
+        .map(function (skill) { return skill.trim(); })
+        .filter(Boolean);
+  const selectedSecondarySkill = selectedSecondarySkills[0] || ""; %>
+
   <div class="glass-panel auth-story" data-reveal>
     <p class="eyebrow">For professionals</p>
     <h1><%= authContent.title %></h1>
@@ -41,14 +49,30 @@
 
         <label class="field-group">
           <span>Primary skill</span>
-          <input type="text" id="primary-skill" name="primary-skill" value="<%= registerFormData.primarySkill %>" placeholder="Electrician" required>
+          <select id="primary-skill" name="primary-skill" required>
+            <option value="">Select a platform service</option>
+            <% platformServices.forEach(function (service) { %>
+              <option value="<%= service.name %>" <%= registerFormData.primarySkill === service.name ? "selected" : "" %>>
+                <%= service.name %>
+              </option>
+            <% }) %>
+          </select>
+          <small class="field-hint">Choose the main service you want clients to find you for.</small>
         </label>
       </div>
 
       <div class="form-row">
         <label class="field-group">
           <span>Additional skills</span>
-          <input type="text" id="secondary-skills" name="secondary-skills" value="<%= registerFormData.secondarySkills %>" placeholder="CCTV, inverter repair, maintenance">
+          <select id="secondary-skills" name="secondary-skills">
+            <option value="">Select an additional service</option>
+            <% platformServices.forEach(function (service) { %>
+              <option value="<%= service.name %>" <%= selectedSecondarySkill === service.name ? "selected" : "" %>>
+                <%= service.name %>
+              </option>
+            <% }) %>
+          </select>
+          <small class="field-hint">Optional. Choose one extra platform category you also serve.</small>
         </label>
 
         <label class="field-group">

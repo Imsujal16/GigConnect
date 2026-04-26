@@ -1,0 +1,3 @@
+[dotenv@17.2.3] injecting env (7) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+MySQL connected successfully to dbmsproject
+Server running at http://localhost:3000

@@ -29,6 +29,7 @@ const {
   deleteProfessionalAccount,
   authenticateProfessional,
   createBooking,
+  createClientReview,
   updateProfessionalBookingStatus,
   getClientDashboardData,
   getProfessionalDashboardData,
@@ -347,14 +348,49 @@ async function resolveServiceIdsFromInput(primarySkill, secondarySkills) {
 
   const serviceOptions = await getServiceOptions();
   const lowerSkills = skills.map((skill) => skill.toLowerCase());
+  const matchedIds = [];
 
-  const matched = serviceOptions.filter((service) =>
-    lowerSkills.some((skill) => service.name.toLowerCase().includes(skill) || skill.includes(service.name.toLowerCase()))
-  );
+  for (const skill of lowerSkills) {
+    const matchedService = serviceOptions.find((service) => {
+      const serviceName = service.name.toLowerCase();
+      const serviceSlug = String(service.slug || "").toLowerCase();
 
-  return matched.length ? matched.map((service) => service.id) : serviceOptions
-    .filter((service) => lowerSkills[0] && lowerSkills[0].includes(service.name.toLowerCase()))
-    .map((service) => service.id);
+      return (
+        serviceName === skill ||
+        serviceSlug === skill ||
+        serviceName.includes(skill) ||
+        skill.includes(serviceName) ||
+        (serviceSlug && (serviceSlug.includes(skill) || skill.includes(serviceSlug)))
+      );
+    });
+
+    if (matchedService && !matchedIds.includes(matchedService.id)) {
+      matchedIds.push(matchedService.id);
+    }
+  }
+
+  return matchedIds;
+}
+
+async function getRegistrationServiceOptions() {
+  if (isDatabaseReady()) {
+    const liveServices = await getServiceOptions();
+    if (liveServices.length) {
+      return liveServices.map((service) => ({
+        id: Number(service.id),
+        name: sanitizeText(service.name),
+        slug: sanitizeText(service.slug),
+        basePriceInr: Number(service.basePriceInr || 0)
+      }));
+    }
+  }
+
+  return siteContent.home.services.map((service, index) => ({
+    id: index + 1,
+    name: sanitizeText(service.name),
+    slug: sanitizeText(service.name.toLowerCase().replace(/\s+/g, "-")),
+    basePriceInr: 0
+  }));
 }
 
 function renderContactPage(res, overrides = {}) {
@@ -419,7 +455,9 @@ function renderProfessionalLoginPage(res, overrides = {}) {
   });
 }
 
-function renderRegisterPage(res, overrides = {}) {
+async function renderRegisterPage(res, overrides = {}) {
+  const platformServices = await getRegistrationServiceOptions();
+
   return res.render("register", {
     title: "Register as a professional | GigConnect",
     pageClass: "page-register",
@@ -431,7 +469,7 @@ function renderRegisterPage(res, overrides = {}) {
       email: "",
       phone: "",
       primarySkill: "",
-      secondarySkills: "",
+      secondarySkills: [],
       city: "",
       area: "",
       experience: "",
@@ -439,6 +477,7 @@ function renderRegisterPage(res, overrides = {}) {
       photo: "",
       description: ""
     },
+    platformServices,
     ...overrides
   });
 }
@@ -694,7 +733,9 @@ app.post(
   }
 );
 
-app.get("/register", (req, res) => renderRegisterPage(res));
+app.get("/register", async (req, res) => {
+  await renderRegisterPage(res);
+});
 
 app.post(
   "/register",
@@ -702,6 +743,7 @@ app.post(
     body("fullname").trim().isLength({ min: 2, max: 120 }).withMessage("Please enter your full name."),
     body("email").trim().isEmail().withMessage("Please enter a valid email address."),
     body("phone").trim().isLength({ min: 10, max: 20 }).withMessage("Please enter a valid phone number."),
+    body("primary-skill").trim().isLength({ min: 2, max: 120 }).withMessage("Please choose your primary service."),
     body("city").trim().isLength({ min: 2, max: 120 }).withMessage("Please enter your city."),
     body("area").trim().isLength({ min: 2, max: 120 }).withMessage("Please enter your service area."),
     body("experience").isInt({ min: 0, max: 60 }).withMessage("Please enter valid years of experience."),
@@ -719,7 +761,7 @@ app.post(
       email: sanitizeText(req.body.email),
       phone: sanitizeText(req.body.phone),
       primarySkill: sanitizeText(req.body["primary-skill"]),
-      secondarySkills: sanitizeText(req.body["secondary-skills"]),
+      secondarySkills: normalizeSkills(req.body["secondary-skills"]),
       city: sanitizeText(req.body.city),
       area: sanitizeText(req.body.area),
       experience: sanitizeText(req.body.experience),
@@ -729,14 +771,14 @@ app.post(
     };
 
     if (!errors.isEmpty()) {
-      return renderRegisterPage(res.status(422), {
+      return await renderRegisterPage(res.status(422), {
         formNotice: createFormNotice("error", errors.array()[0].msg),
         registerFormData: formData
       });
     }
 
     if (!isDatabaseReady()) {
-      return renderRegisterPage(res.status(503), {
+      return await renderRegisterPage(res.status(503), {
         formNotice: createFormNotice("error", "MySQL is not connected yet, so professional registration is unavailable."),
         registerFormData: formData
       });
@@ -744,7 +786,7 @@ app.post(
 
     const serviceIds = await resolveServiceIdsFromInput(formData.primarySkill, formData.secondarySkills);
     if (!serviceIds.length) {
-      return renderRegisterPage(res.status(422), {
+      return await renderRegisterPage(res.status(422), {
         formNotice: createFormNotice("error", "Please enter a skill that matches one of the platform service categories."),
         registerFormData: formData
       });
@@ -768,7 +810,7 @@ app.post(
       req.session.user = user;
       return res.redirect("/professional/dashboard");
     } catch (error) {
-      return renderRegisterPage(res.status(error.statusCode || 500), {
+      return await renderRegisterPage(res.status(error.statusCode || 500), {
         formNotice: createFormNotice("error", error.message || "Could not create the professional profile right now."),
         registerFormData: formData
       });
@@ -789,6 +831,58 @@ app.get("/client/dashboard", requireRole("client"), async (req, res) => {
     formNotice: consumeSessionNotice(req, "clientDashboardNotice")
   });
 });
+
+app.post(
+  "/client/bookings/:bookingId/review",
+  requireRole("client"),
+  [
+    param("bookingId").isInt({ min: 1 }).withMessage("Please choose a valid completed booking."),
+    body("rating").isInt({ min: 1, max: 5 }).withMessage("Please choose a rating between 1 and 5."),
+    body("reviewText")
+      .optional({ checkFalsy: true })
+      .trim()
+      .isLength({ max: 600 })
+      .withMessage("Please keep your review under 600 characters.")
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty() && !isDatabaseReady()) {
+      req.session.clientDashboardNotice = createFormNotice(
+        "error",
+        "MySQL is not connected right now, so ratings are temporarily unavailable."
+      );
+      return res.redirect("/client/dashboard");
+    }
+
+    if (!errors.isEmpty()) {
+      req.session.clientDashboardNotice = createFormNotice("error", errors.array()[0].msg);
+      return res.redirect("/client/dashboard");
+    }
+
+    try {
+      await createClientReview({
+        bookingId: Number(req.params.bookingId),
+        clientId: req.session.user.id,
+        rating: Number(req.body.rating),
+        reviewText: sanitizeText(req.body.reviewText),
+        reviewerName: req.session.user.name
+      });
+
+      req.session.clientDashboardNotice = createFormNotice(
+        "success",
+        "Thanks for your feedback. Your rating has been saved and the professional score is updated."
+      );
+    } catch (error) {
+      req.session.clientDashboardNotice = createFormNotice(
+        "error",
+        error.message || "Could not save your rating right now."
+      );
+    }
+
+    return res.redirect("/client/dashboard");
+  }
+);
 
 app.post(
   "/client/delete-profile",

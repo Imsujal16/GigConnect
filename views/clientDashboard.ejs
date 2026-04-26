@@ -78,6 +78,61 @@
         <% if (booking.details) { %>
           <p class="result-description"><%= booking.details %></p>
         <% } %>
+
+        <% if (booking.review) { %>
+          <section class="glass-inset dashboard-review-panel">
+            <div class="dashboard-review-head">
+              <div>
+                <p class="card-kicker">Your review</p>
+                <h3><%= booking.review.rating %> / 5 rating</h3>
+              </div>
+              <p class="dashboard-review-date">Submitted on <%= formatShortDate(booking.review.createdAt) %></p>
+            </div>
+
+            <% if (booking.review.reviewText) { %>
+              <p class="dashboard-review-copy"><%= booking.review.reviewText %></p>
+            <% } else { %>
+              <p class="dashboard-review-copy is-muted">You submitted a rating without a written review.</p>
+            <% } %>
+          </section>
+        <% } %>
+
+        <% if (booking.canReview) { %>
+          <form method="POST" action="/client/bookings/<%= booking.id %>/review" class="glass-inset dashboard-review-form">
+            <div class="dashboard-review-head">
+              <div class="dashboard-review-copy-block">
+                <p class="card-kicker">Rate this professional</p>
+                <h3>Share your completed-service feedback.</h3>
+                <p class="dashboard-review-date">Your rating updates the live professional score.</p>
+              </div>
+            </div>
+
+            <div class="dashboard-review-grid">
+              <div class="dashboard-review-side">
+                <label class="field-group">
+                  <span>Rating</span>
+                  <select name="rating" required>
+                    <option value="">Select rating</option>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Good</option>
+                    <option value="3">3 - Average</option>
+                    <option value="2">2 - Needs improvement</option>
+                    <option value="1">1 - Poor</option>
+                  </select>
+                </label>
+
+                <div class="dashboard-actions dashboard-review-actions">
+                  <button type="submit" class="button button-primary">Submit rating</button>
+                </div>
+              </div>
+
+              <label class="field-group dashboard-review-field-wide">
+                <span>Review message</span>
+                <textarea name="reviewText" rows="3" placeholder="Tell others how the service went, what was good, and whether you would book again."></textarea>
+              </label>
+            </div>
+          </form>
+        <% } %>
       </article>
     <% }) %>
   </div>

@@ -1,0 +1,3 @@
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+MySQL connected successfully to dbmsproject
+Server running at http://localhost:3102

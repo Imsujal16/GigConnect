@@ -380,6 +380,8 @@ input,
 select,
 textarea {
   width: 100%;
+  font: inherit;
+  line-height: 1.35;
   border: 1px solid rgba(179, 147, 108, 0.24);
   border-radius: 16px;
   padding: 14px 16px;
@@ -390,6 +392,27 @@ textarea {
     border-color var(--transition),
     box-shadow var(--transition),
     background var(--transition);
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select {
+  height: 56px;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  line-height: 1.35;
+  padding-right: 44px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #7d8798 50%),
+    linear-gradient(135deg, #7d8798 50%, transparent 50%);
+  background-position:
+    calc(100% - 24px) calc(50% - 2px),
+    calc(100% - 18px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
 }
 
 input::placeholder,
@@ -411,11 +434,23 @@ summary:focus-visible {
 }
 
 textarea {
+  min-height: 132px;
   resize: vertical;
+}
+
+select[multiple] {
+  min-height: 156px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+select[multiple] option {
+  padding: 8px 10px;
 }
 
 .field-group {
   display: grid;
+  align-content: start;
   gap: 10px;
   margin: 0 0 16px;
 }
@@ -424,6 +459,13 @@ textarea {
   color: var(--text);
   font-size: 0.92rem;
   font-weight: 700;
+}
+
+.field-hint {
+  margin: -2px 0 0;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .toggle-row {
@@ -454,6 +496,7 @@ textarea {
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 16px;
 }
 
@@ -1577,6 +1620,83 @@ textarea {
   gap: 16px;
 }
 
+.dashboard-review-panel,
+.dashboard-review-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 2px;
+  padding: 20px 22px;
+}
+
+.dashboard-review-head {
+  display: block;
+}
+
+.dashboard-review-copy-block {
+  display: grid;
+  gap: 8px;
+  max-width: 560px;
+}
+
+.dashboard-review-head h3 {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: 1.18rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-review-date {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.dashboard-review-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.dashboard-review-side {
+  display: grid;
+  gap: 14px;
+}
+
+.dashboard-review-form .field-group {
+  margin: 0;
+}
+
+.dashboard-review-field-wide {
+  grid-column: auto;
+}
+
+.dashboard-review-form textarea {
+  min-height: 132px;
+}
+
+.dashboard-review-actions {
+  width: 100%;
+}
+
+.dashboard-review-actions .button {
+  width: 100%;
+  justify-content: center;
+}
+
+.dashboard-review-copy {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.dashboard-review-copy.is-muted {
+  font-style: italic;
+}
+
 .dashboard-header-copy p {
   margin-bottom: 8px;
 }
@@ -1777,8 +1897,17 @@ textarea {
   }
 
   .discover-form-grid,
-  .result-meta {
+  .result-meta,
+  .dashboard-review-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-review-form {
+    padding: 18px;
+  }
+
+  .dashboard-review-copy-block {
+    max-width: none;
   }
 }
 
