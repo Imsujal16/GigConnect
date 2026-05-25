@@ -1,0 +1,20 @@
+[
+    {
+      "stepNumber": 1,
+      "title": "Search for a Service",
+      "description": "Easily find the professional you need by searching for specific services like 'Electrician', 'Plumber', 'Carpenter', and more in your area.",
+      "icon": "assets/howitworkssearch.jpg" 
+    },
+    {
+      "stepNumber": 2,
+      "title": "Connect with Professionals",
+      "description": "Browse detailed profiles of selected professionals, view their ratings, experience, and services offered. Select the best match accordint to your needs.",
+      "icon": "assets/howitworksprofessional.jpg"
+    },
+    {
+      "stepNumber": 3,
+      "title": "Get the Job Done",
+      "description": "Once you've chosen a professional, contact them directly to schedule the service. Enjoy reliable and efficient help right at your doorstep.",
+      "icon": "assets/howitworksworkdone.jpg"
+    }
+]

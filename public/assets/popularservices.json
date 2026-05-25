@@ -1,0 +1,52 @@
+[
+    {
+        "name":"plumbing",
+        "icon":"assets/plumbing.png",
+        "altText":"plumbing icon"
+    },
+    {
+        "name":"Electrician",
+        "icon":"assets/electrician.png",
+        "altText":"electrician icon"
+    },
+    {
+        "name":"Delivery services",
+        "icon":"assets/delivery.png",
+        "altText":"delivery icon"
+    },
+    {
+        "name":"Driver on demand",
+        "icon":"assets/driver.png",
+        "altText":"driver icon"
+    },
+    {
+        "name":"Home cleaner",
+        "icon":"assets/home cleaning.png",
+        "altText":"home cleaner icon"
+    },
+    {
+        "name":"IT support",
+        "icon":"assets/Screenshot 2025-09-23 151227.png",
+        "altText":"IT support icon"
+    },
+    {
+        "name":"Fitness training",
+        "icon":"assets/fitness.png",
+        "altText":"fitness icon"
+    },
+    {
+        "name":"laundry",
+        "icon":"assets/laundry.png",
+        "altText":"laundry icon"
+    },
+    {
+        "name":"cooking",
+        "icon":"assets/cooking.png",
+        "altText":"cooking icon"
+    },
+    {
+        "name":"tutoring",
+        "icon":"assets/it support.png",
+        "altText":"tutoring icon"
+    }
+]

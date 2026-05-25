@@ -1,0 +1,38 @@
+<section class="section shell auth-layout">
+  <div class="glass-panel auth-story" data-reveal>
+    <p class="eyebrow">Professional login</p>
+    <h1><%= authContent.title %></h1>
+    <p><%= authContent.description %></p>
+  </div>
+
+  <div class="glass-panel auth-form-card" data-reveal>
+    <p class="card-kicker">Log in</p>
+    <h2>Manage your professional profile.</h2>
+
+    <%- include("partials/notice") %>
+    <div class="auth-note glass-inset">
+      <p><%= bridgeNote %></p>
+    </div>
+
+    <form class="auth-form" action="/professionallogin" method="POST">
+      <label class="field-group">
+        <span>Email or phone number</span>
+        <input type="text" id="email" name="email" value="<%= formData.email %>" required>
+      </label>
+
+      <label class="field-group">
+        <span>Password</span>
+        <input type="password" id="password" name="password" required>
+      </label>
+
+      <label class="toggle-row">
+        <span>Remember me on this device</span>
+        <input type="checkbox" id="remember" name="remember">
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Log in</button>
+    </form>
+
+    <p class="auth-switch">Need a profile? <a href="/register">Join GigConnect</a></p>
+  </div>
+</section>

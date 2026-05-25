@@ -1,0 +1,54 @@
+<footer class="site-footer">
+  <div class="shell footer-shell">
+    <section class="footer-band glass-panel">
+      <div>
+        <p class="eyebrow">Ready to get started?</p>
+        <h2>Find reliable help or join GigConnect as a professional.</h2>
+      </div>
+      <div class="footer-band-actions">
+        <a href="/findHelpNow" class="button button-primary">Find professionals</a>
+        <a href="/register" class="button button-secondary">Join GigConnect</a>
+      </div>
+    </section>
+
+    <div class="footer-grid">
+      <div class="footer-brand-block">
+        <a href="/" class="brand-lockup footer-brand-link">
+          <img src="/assets/gigconnect.logo.png" alt="GigConnect logo" class="brand-mark">
+          <span class="brand-copy">
+            <span class="brand-name"><%= brand.name %></span>
+            <span class="brand-caption"><%= brand.tagline %></span>
+          </span>
+        </a>
+
+        <div class="footer-contact-list">
+          <a href="tel:<%= brand.phone.replace(/[^\d+]/g, '') %>"><%= brand.phone %></a>
+          <a href="mailto:<%= brand.email %>"><%= brand.email %></a>
+        </div>
+
+        <div class="footer-socials">
+          <% footerContent.socialLinks.forEach(function (social) { %>
+            <a href="<%= social.href %>" aria-label="<%= social.label %>">
+              <img src="<%= social.icon %>" alt="<%= social.label %>">
+            </a>
+          <% }) %>
+        </div>
+      </div>
+
+      <% footerContent.columns.forEach(function (column) { %>
+        <div class="footer-column">
+          <h3><%= column.heading %></h3>
+          <ul>
+            <% column.links.forEach(function (link) { %>
+              <li><a href="<%= link.href %>"><%= link.label %></a></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <%= currentYear %> GigConnect. Local services, handled better.</p>
+    </div>
+  </div>
+</footer>

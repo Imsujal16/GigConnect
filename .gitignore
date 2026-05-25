@@ -1,0 +1,14 @@
+node_modules/
+.env
+.ipynb_checkpoints/
+*.log
+backuphtml/
+outputs/
+tmp/
+report_images/
+report_render/
+report_render_images/
+report_render_images_final/
+report_render_images_fixed/
+report_render_images_fixed2/
+report_render_images_fixed3/

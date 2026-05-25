@@ -1,0 +1,35 @@
+[
+    {
+        "name":"Ravi kumar",
+        "ratings":5,
+        "experience":"Govt. cetrified 6+ years of experience",
+        "distance":"1.0km away",
+        "photo":"assets/Ravi kumar.png",
+        "contact": "+91 9876543210"
+    },
+    {
+        "name":"Rajesh",
+        "ratings":4,
+        "experience":"Govt. cetrified 4+ years of experience",
+        "distance":"2km away",
+        "photo":"assets/rajesh 2ndpage.png",
+        "contact": "+91 9823643210"
+    },
+    {
+        "name":"Atif",
+        "ratings":3,
+        "experience":"Govt. cetrified 3+ years of experience",
+        "distance":"2km away",
+        "photo": "assets/atif 2ndp PAGE.png",
+        "contact": "+91 9823643810"
+        
+    },
+    {
+        "name":"mukesh kumar",
+        "ratings":4,
+        "experience":"Govt. cetrified 4+ years of experience",
+        "distance":"5 km away",
+        "photo": "assets/suresh 2ndpage.png",
+        "contact": "+91 9726343210"
+    }
+]

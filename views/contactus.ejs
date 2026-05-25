@@ -1,0 +1,73 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow"><%= contactContent.eyebrow %></p>
+    <h1><%= contactContent.title %></h1>
+    <p><%= contactContent.description %></p>
+  </div>
+</section>
+
+<section class="section shell contact-layout">
+  <div class="contact-sidebar">
+    <div class="glass-panel contact-intro" data-reveal>
+      <p class="card-kicker">What we can help with</p>
+      <div class="feature-grid feature-grid-single">
+        <% contactContent.promises.forEach(function (item) { %>
+          <article class="feature-card">
+            <h3><%= item.title %></h3>
+            <p><%= item.description %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="glass-panel contact-direct" data-reveal>
+      <p class="card-kicker">Direct contact</p>
+      <h2>Prefer to reach us directly?</h2>
+      <div class="contact-stack">
+        <a href="tel:<%= brand.phone.replace(/[^\d+]/g, '') %>"><%= brand.phone %></a>
+        <a href="mailto:<%= brand.email %>"><%= brand.email %></a>
+        <p>Cyber City, Gurugram, India</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-panel contact-form-panel" data-reveal>
+    <p class="card-kicker">Send a message</p>
+    <h2>We will route your request to the right team.</h2>
+
+    <%- include("partials/notice") %>
+
+    <form class="contact-form" action="/contactus" method="POST">
+      <div class="form-row">
+        <label class="field-group">
+          <span>Full name</span>
+          <input type="text" name="fullname" value="<%= formData.fullname %>" required>
+        </label>
+
+        <label class="field-group">
+          <span>Email address</span>
+          <input type="email" name="email" value="<%= formData.email %>" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Phone number</span>
+          <input type="tel" name="phone" value="<%= formData.phone %>">
+        </label>
+
+        <label class="field-group">
+          <span>Subject</span>
+          <input type="text" name="subject" value="<%= formData.subject %>">
+        </label>
+      </div>
+
+      <label class="field-group">
+        <span>Your message</span>
+        <textarea name="message" rows="6" required><%= formData.message %></textarea>
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Send message</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,135 @@
+<section class="section shell auth-layout">
+  <% const selectedSecondarySkills = Array.isArray(registerFormData.secondarySkills)
+    ? registerFormData.secondarySkills
+    : String(registerFormData.secondarySkills || "")
+        .split(",")
+        .map(function (skill) { return skill.trim(); })
+        .filter(Boolean);
+  const selectedSecondarySkill = selectedSecondarySkills[0] || ""; %>
+
+  <div class="glass-panel auth-story" data-reveal>
+    <p class="eyebrow">For professionals</p>
+    <h1><%= authContent.title %></h1>
+    <p><%= authContent.description %></p>
+
+    <ul class="check-list">
+      <% authContent.benefits.forEach(function (benefit) { %>
+        <li><%= benefit %></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <div class="glass-panel auth-form-card" data-reveal>
+    <p class="card-kicker">Join GigConnect</p>
+    <h2>Create your professional profile.</h2>
+
+    <%- include("partials/notice") %>
+    <div class="auth-note glass-inset">
+      <p><%= bridgeNote %></p>
+    </div>
+
+    <form class="auth-form registration-form" action="/register" method="POST">
+      <div class="form-row">
+        <label class="field-group">
+          <span>Full name</span>
+          <input type="text" id="name" name="fullname" value="<%= registerFormData.name %>" placeholder="Your full name" required>
+        </label>
+
+        <label class="field-group">
+          <span>Email address</span>
+          <input type="email" id="email" name="email" value="<%= registerFormData.email %>" placeholder="name@example.com" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Phone number</span>
+          <input type="tel" id="phone" name="phone" value="<%= registerFormData.phone %>" placeholder="+91 12345 67890" required>
+        </label>
+
+        <label class="field-group">
+          <span>Primary skill</span>
+          <select id="primary-skill" name="primary-skill" required>
+            <option value="">Select a platform service</option>
+            <% platformServices.forEach(function (service) { %>
+              <option value="<%= service.name %>" <%= registerFormData.primarySkill === service.name ? "selected" : "" %>>
+                <%= service.name %>
+              </option>
+            <% }) %>
+          </select>
+          <small class="field-hint">Choose the main service you want clients to find you for.</small>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Additional skills</span>
+          <select id="secondary-skills" name="secondary-skills">
+            <option value="">Select an additional service</option>
+            <% platformServices.forEach(function (service) { %>
+              <option value="<%= service.name %>" <%= selectedSecondarySkill === service.name ? "selected" : "" %>>
+                <%= service.name %>
+              </option>
+            <% }) %>
+          </select>
+          <small class="field-hint">Optional. Choose one extra platform category you also serve.</small>
+        </label>
+
+        <label class="field-group">
+          <span>City</span>
+          <input type="text" id="city" name="city" value="<%= registerFormData.city %>" placeholder="Gurugram" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Service area</span>
+          <input type="text" id="area" name="area" value="<%= registerFormData.area %>" placeholder="Sector 56, DLF Phase 4" required>
+        </label>
+
+        <label class="field-group">
+          <span>Experience in years</span>
+          <input type="number" id="experience" name="experience" value="<%= registerFormData.experience %>" min="0" max="100" placeholder="6" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Starting rate in rupees</span>
+          <input type="number" id="hourly-rate" name="hourly-rate" value="<%= registerFormData.hourlyRate %>" min="100" max="100000" placeholder="599" required>
+        </label>
+
+        <label class="field-group">
+          <span>Profile photo URL</span>
+          <input type="url" id="photo" name="photo" value="<%= registerFormData.photo %>" placeholder="https://example.com/profile.jpg">
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field-group">
+          <span>Create password</span>
+          <input type="password" id="password" name="password" required>
+        </label>
+
+        <label class="field-group">
+          <span>Confirm password</span>
+          <input type="password" id="confirm-password" name="confirm-password" required>
+        </label>
+      </div>
+
+      <label class="field-group">
+        <span>Professional summary</span>
+        <textarea id="description" name="description" rows="5" placeholder="Describe your work, service quality, and what clients can expect."><%= registerFormData.description %></textarea>
+      </label>
+
+      <label class="toggle-row">
+        <span>I agree to the Terms of Service and Privacy Policy.</span>
+        <input type="checkbox" id="agree-terms" name="agree-terms" required>
+      </label>
+
+      <button type="submit" class="button button-primary button-block">Create professional profile</button>
+    </form>
+
+    <p class="auth-switch">Already on the platform? <a href="/professionallogin">Log in</a></p>
+  </div>
+</section>

@@ -1,0 +1,137 @@
+<section class="page-hero">
+  <div class="shell page-hero-content">
+    <p class="eyebrow">Professional dashboard</p>
+    <h1>Manage incoming local booking requests.</h1>
+    <p>Your profile, service visibility, and booking demand are now powered by the MySQL project database.</p>
+  </div>
+</section>
+
+<section class="section shell dashboard-shell">
+  <%- include("partials/notice") %>
+
+  <div class="dashboard-metrics">
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.totalRequests %></strong>
+      <h3>Total requests</h3>
+      <p>All booking requests linked to your professional profile.</p>
+    </article>
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.confirmedRequests %></strong>
+      <h3>Confirmed</h3>
+      <p>Requests that are already scheduled or accepted.</p>
+    </article>
+    <article class="metric-card glass-panel" data-reveal>
+      <strong><%= dashboardData.summary.pendingRequests %></strong>
+      <h3>Pending</h3>
+      <p>Fresh leads waiting for action.</p>
+    </article>
+  </div>
+
+  <% if (dashboardData.profile) { %>
+    <div class="glass-panel dashboard-profile" data-reveal>
+      <div class="worker-preview-head">
+        <img src="<%= encodeURI(dashboardData.profile.photo) %>" alt="<%= dashboardData.profile.name %>" class="worker-preview-avatar">
+        <div>
+          <h2><%= dashboardData.profile.name %></h2>
+          <p><%= dashboardData.profile.city %><% if (dashboardData.profile.area) { %> | <%= dashboardData.profile.area %><% } %></p>
+        </div>
+      </div>
+
+      <div class="booking-meta">
+        <span><%= dashboardData.profile.experience %> years experience</span>
+        <span><%= formatCurrency(dashboardData.profile.startingPrice) %> starting rate</span>
+        <span><%= Number(dashboardData.profile.ratings || 0).toFixed(1) %> / 5 rating</span>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="dashboard-list">
+    <% if (!dashboardData.bookings.length) { %>
+      <div class="empty-state">
+        <h3>No booking requests yet.</h3>
+        <p>As clients create requests from the live marketplace, they will appear here automatically.</p>
+      </div>
+    <% } %>
+
+    <% dashboardData.bookings.forEach(function (booking) { %>
+      <article class="dashboard-card glass-panel" data-reveal>
+        <div class="dashboard-card-top">
+          <div class="dashboard-header-copy">
+            <p class="card-kicker">Booking <%= booking.bookingCode %></p>
+            <h2><%= booking.clientName %></h2>
+          </div>
+          <span class="result-badge status-badge-<%= booking.status %>"><%= formatStatusLabel(booking.status) %></span>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Service</span>
+            <strong><%= booking.serviceName %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Date</span>
+            <strong><%= formatShortDate(booking.preferredDate) %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Time</span>
+            <strong><%= formatTimeSlot(booking.preferredTimeSlot) %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Budget</span>
+            <strong><%= formatCurrency(booking.budgetInr) %></strong>
+          </div>
+          <div class="dashboard-detail dashboard-detail-wide">
+            <span class="dashboard-label">Email</span>
+            <strong><%= booking.clientEmail || "Not shared" %></strong>
+          </div>
+          <div class="dashboard-detail">
+            <span class="dashboard-label">Phone</span>
+            <strong><%= booking.clientPhone || "Not shared" %></strong>
+          </div>
+          <div class="dashboard-detail dashboard-detail-wide">
+            <span class="dashboard-label">Area</span>
+            <strong><%= booking.addressArea %></strong>
+          </div>
+        </div>
+
+        <% if (booking.details) { %>
+          <p class="result-description"><%= booking.details %></p>
+        <% } %>
+
+        <% if (booking.status === "pending" || booking.status === "confirmed") { %>
+          <div class="dashboard-actions">
+            <% if (booking.status === "pending") { %>
+              <form method="POST" action="/professional/bookings/<%= booking.id %>/status">
+                <input type="hidden" name="status" value="confirmed">
+                <button type="submit" class="button button-primary">Accept request</button>
+              </form>
+            <% } %>
+
+            <% if (booking.status === "confirmed") { %>
+              <form method="POST" action="/professional/bookings/<%= booking.id %>/status">
+                <input type="hidden" name="status" value="completed">
+                <button type="submit" class="button button-secondary">Mark completed</button>
+              </form>
+            <% } %>
+          </div>
+        <% } %>
+      </article>
+    <% }) %>
+  </div>
+
+  <section class="glass-panel dashboard-danger" data-reveal>
+    <div class="dashboard-danger-copy">
+      <p class="card-kicker">Danger zone</p>
+      <h2>Delete professional profile</h2>
+      <p>Delete this professional account permanently. Because of the current database design, linked service mappings, reviews, and booking requests for this profile will also be removed.</p>
+    </div>
+
+    <form method="POST" action="/professional/delete-profile" class="danger-form">
+      <label class="danger-confirm">
+        <input type="checkbox" name="confirmDelete" value="yes" required>
+        <span>I understand that deleting this professional profile is permanent.</span>
+      </label>
+      <button type="submit" class="button button-danger">Delete profile</button>
+    </form>
+  </section>
+</section>
